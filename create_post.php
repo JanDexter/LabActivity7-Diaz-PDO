@@ -32,21 +32,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Create Post</title>
-    <script src="validate.js"></script>
 </head>
 <body>
 <?php render_nav(); ?>
 <h1>Create Post</h1>
-<form method="post" action="create_post.php" novalidate data-validate>
+<form method="post" action="create_post.php">
     <p>
         <label>Title<br>
-            <input type="text" name="title" value="<?= e($title) ?>" data-rules="required">
+            <input type="text" name="title" value="<?= e($title) ?>" maxlength="255" required>
         </label>
         <?php if (isset($errors['title'])): ?><br><?= e($errors['title']) ?><?php endif; ?>
     </p>
     <p>
         <label>Body<br>
-            <textarea name="body" data-rules="required"><?= e($body) ?></textarea>
+            <textarea name="body" required><?= e($body) ?></textarea>
         </label>
         <?php if (isset($errors['body'])): ?><br><?= e($errors['body']) ?><?php endif; ?>
     </p>

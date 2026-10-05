@@ -45,21 +45,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <script src="validate.js"></script>
 </head>
 <body>
 <h1>Login</h1>
 <?php if (isset($errors['form'])): ?><p><?= e($errors['form']) ?></p><?php endif; ?>
-<form method="post" action="login.php" novalidate data-validate>
+<form method="post" action="login.php">
     <p>
         <label>Email<br>
-            <input type="email" name="email" value="<?= e($email) ?>" data-rules="required,email">
+            <input type="email" name="email" value="<?= e($email) ?>" required>
         </label>
         <?php if (isset($errors['email'])): ?><br><?= e($errors['email']) ?><?php endif; ?>
     </p>
     <p>
         <label>Password<br>
-            <input type="password" name="password" data-rules="required">
+            <input type="password" name="password" required>
         </label>
         <?php if (isset($errors['password'])): ?><br><?= e($errors['password']) ?><?php endif; ?>
     </p>

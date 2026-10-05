@@ -86,7 +86,6 @@ $comments = $pdo->prepare(
 <head>
     <meta charset="UTF-8">
     <title>News Feed</title>
-    <script src="validate.js"></script>
 </head>
 <body>
 <?php render_nav(); ?>
@@ -104,11 +103,11 @@ $comments = $pdo->prepare(
     <div id="post-<?= $pid ?>">
     <?php if ($isOwner && $editPostId === $pid): ?>
         <?php $d = $failed === 'save_post' && isset($drafts[$pid]) ? $drafts[$pid] : ['title' => $post['title'], 'body' => $post['body']]; ?>
-        <form method="post" action="index.php#post-<?= $pid ?>" novalidate data-validate>
+        <form method="post" action="index.php#post-<?= $pid ?>">
             <input type="hidden" name="action" value="save_post">
             <input type="hidden" name="post_id" value="<?= $pid ?>">
-            <p><input type="text" name="title" value="<?= e($d['title']) ?>" data-rules="required"></p>
-            <p><textarea name="body" data-rules="required"><?= e($d['body']) ?></textarea></p>
+            <p><input type="text" name="title" value="<?= e($d['title']) ?>" maxlength="255" required></p>
+            <p><textarea name="body" required><?= e($d['body']) ?></textarea></p>
             <?php if ($failed === 'save_post' && isset($errors[$pid])): ?><p><?= e($errors[$pid]) ?></p><?php endif; ?>
             <button type="submit">Save</button>
             <a href="index.php#post-<?= $pid ?>">Cancel</a>
@@ -136,11 +135,11 @@ $comments = $pdo->prepare(
     <?php foreach ($postComments as $c): ?>
         <?php $cid = (int) $c['id']; $mine = is_current_user($c['user_id']); ?>
         <?php if ($mine && $editCommentId === $cid): ?>
-            <form method="post" action="index.php#post-<?= $pid ?>" novalidate data-validate>
+            <form method="post" action="index.php#post-<?= $pid ?>">
                 <input type="hidden" name="action" value="save_comment">
                 <input type="hidden" name="post_id" value="<?= $pid ?>">
                 <input type="hidden" name="comment_id" value="<?= $cid ?>">
-                <p><textarea name="body" data-rules="required"><?= e($failed === 'save_comment' ? ($drafts[$pid] ?? '') : $c['body']) ?></textarea></p>
+                <p><textarea name="body" required><?= e($failed === 'save_comment' ? ($drafts[$pid] ?? '') : $c['body']) ?></textarea></p>
                 <?php if ($failed === 'save_comment' && isset($errors[$pid])): ?><p><?= e($errors[$pid]) ?></p><?php endif; ?>
                 <button type="submit">Save</button>
                 <a href="index.php#post-<?= $pid ?>">Cancel</a>
@@ -163,10 +162,10 @@ $comments = $pdo->prepare(
         <?php endif; ?>
     <?php endforeach; ?>
 
-    <form method="post" action="index.php#post-<?= $pid ?>" novalidate data-validate>
+    <form method="post" action="index.php#post-<?= $pid ?>">
         <input type="hidden" name="action" value="add_comment">
         <input type="hidden" name="post_id" value="<?= $pid ?>">
-        <p><textarea name="body" placeholder="Write a comment..." data-rules="required"><?= e($failed === 'add_comment' ? ($drafts[$pid] ?? '') : '') ?></textarea></p>
+        <p><textarea name="body" placeholder="Write a comment..." required><?= e($failed === 'add_comment' ? ($drafts[$pid] ?? '') : '') ?></textarea></p>
         <?php if ($failed === 'add_comment' && isset($errors[$pid])): ?><p><?= e($errors[$pid]) ?></p><?php endif; ?>
         <button type="submit">Comment</button>
     </form>

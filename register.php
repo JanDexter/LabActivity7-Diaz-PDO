@@ -51,26 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <script src="validate.js"></script>
 </head>
 <body>
 <h1>Register</h1>
-<form method="post" action="register.php" novalidate data-validate>
+<form method="post" action="register.php">
     <p>
         <label>Name<br>
-            <input type="text" name="name" value="<?= e($name) ?>" data-rules="required">
+            <input type="text" name="name" value="<?= e($name) ?>" maxlength="100" required>
         </label>
         <?php if (isset($errors['name'])): ?><br><?= e($errors['name']) ?><?php endif; ?>
     </p>
     <p>
         <label>Email<br>
-            <input type="email" name="email" value="<?= e($email) ?>" data-rules="required,email">
+            <input type="email" name="email" value="<?= e($email) ?>" maxlength="255" required>
         </label>
         <?php if (isset($errors['email'])): ?><br><?= e($errors['email']) ?><?php endif; ?>
     </p>
     <p>
         <label>Password<br>
-            <input type="password" name="password" data-rules="required">
+            <input type="password" name="password" required>
         </label>
         <?php if (isset($errors['password'])): ?><br><?= e($errors['password']) ?><?php endif; ?>
     </p>
