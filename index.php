@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     } elseif ($action === 'save_comment') {
+        // same author-only rule as posts, enforced in the UPDATE below
         $commentId = (int) ($_POST['comment_id'] ?? 0);
         $body = trim($_POST['body'] ?? '');
         if ($body === '') {
@@ -59,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     }
+    // keep what the user typed in the comment box when validation failed
     if ($failed === 'add_comment' || $failed === 'save_comment') {
         $drafts[$postId] = $body;
     }

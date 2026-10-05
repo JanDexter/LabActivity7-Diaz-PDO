@@ -7,6 +7,7 @@ $dbname = 'blog_site';
 $user   = 'root';
 $pass   = '';
 
+// exceptions on errors, and rows come back as associative arrays
 $pdo = new PDO(
     "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4",
     $user,
@@ -38,6 +39,7 @@ function is_current_user($userId): bool
     return isset($_SESSION['user_id']) && (int) $userId === (int) $_SESSION['user_id'];
 }
 
+// top menu shown on every page for logged-in users
 function render_nav(): void
 {
     echo '<nav><a href="index.php">Feed</a> <a href="create_post.php">Create Post</a> '
